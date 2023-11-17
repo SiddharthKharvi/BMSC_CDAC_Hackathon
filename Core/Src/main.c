@@ -101,7 +101,35 @@ void lcd_clear(void);
 void lcd_backlight(uint8_t state);
 
 /* USER CODE END 0 */
-void getinput();
+uint16_t temp = 0;
+uint16_t humd= 0;
+uint16_t TTemp = 0;
+uint16_t THumd = 0;
+
+
+
+void getinput(){
+	if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET){
+		HAL_ADC_Start(&hadc1);
+		HAL_ADC_PollForConversion(&hadc1,1000);
+		TTemp = (HAL_ADC_GetValue(&hadc1) / 160) + 20;
+	}
+
+	if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7) == GPIO_PIN_SET){
+			HAL_ADC_Start(&hadc1);
+			HAL_ADC_PollForConversion(&hadc1,1000);
+			THumd = HAL_ADC_GetValue(&hadc1) / 40;
+		}
+
+	GetDeviceIDSht21();
+	GetSlaveAcknowledgment();
+	GetTempratureSht21();
+	GetHumidyShtc3();
+	temp = Read_Temprature() / 1000;
+	humd = Read_Humidity() / 1000;
+
+
+}
 /**
   * @brief  The application entry point.
   * @retval int
@@ -159,8 +187,7 @@ int main(void)
 
   while (1){
     /* USER CODE END WHILE */
-
-
+	  getinput();
     /* USER CODE BEGIN 3 */
 
   }

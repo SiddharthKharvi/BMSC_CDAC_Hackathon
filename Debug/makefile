@@ -60,8 +60,8 @@ all: main-build
 main-build: Indus_Board_all_Peripherals.elf secondary-outputs
 
 # Tool invocations
-Indus_Board_all_Peripherals.elf Indus_Board_all_Peripherals.map: $(OBJS) $(USER_OBJS) D:\CDAC\hackathon\ perp-work\solved\ codes\Indus_IOT_ALL_Peripherals\STM32G431MBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Indus_Board_all_Peripherals.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\CDAC\hackathon perp-work\solved codes\Indus_IOT_ALL_Peripherals\STM32G431MBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Indus_Board_all_Peripherals.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Indus_Board_all_Peripherals.elf Indus_Board_all_Peripherals.map: $(OBJS) $(USER_OBJS) C:\Users\siddh\OneDrive\Desktop\FINAL\ STM32\Indus_IOT_ALL_Peripherals\STM32G431MBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Indus_Board_all_Peripherals.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\siddh\OneDrive\Desktop\FINAL STM32\Indus_IOT_ALL_Peripherals\STM32G431MBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Indus_Board_all_Peripherals.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

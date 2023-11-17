@@ -112,35 +112,35 @@ uint16_t B2 = 0;
 
 
 void getinput(){
-	char *t1 = "Temperature: ";
-	char *t2 = "Humidity: ";
 	char temp1[10];
 	char humd1[10];
 
-	if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET){
+	if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) != GPIO_PIN_SET){
 		HAL_ADC_Start(&hadc1);
 		HAL_ADC_PollForConversion(&hadc1,1000);
 		TTemp = (HAL_ADC_GetValue(&hadc1) / 160) + 16;
 		sprintf(temp1, "%d", TTemp);
 
-//		lcd_clear();
-//		lcd_set_cursor(0, 0);
-//		lcd_write_string("SET Temperature:");
-//		lcd_write_string(temp1);
+		lcd_clear();
+		lcd_set_cursor(0, 0);
+		lcd_write_string("SET Temperature");
+		lcd_set_cursor(1, 0);
+		lcd_write_string(temp1);
 
 
 	}
 
-	if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7) == GPIO_PIN_SET){
+	if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7) != GPIO_PIN_SET){
 			HAL_ADC_Start(&hadc1);
 			HAL_ADC_PollForConversion(&hadc1,1000);
 			THumd = HAL_ADC_GetValue(&hadc1) / 40;
 			sprintf(humd1, "%d", THumd);
 
-//			lcd_clear();
-//			lcd_set_cursor(0, 0);
-//			lcd_write_string("SET Humidity:");
-//			lcd_write_string(humd1);
+			lcd_clear();
+			lcd_set_cursor(0, 0);
+			lcd_write_string("SET Humidity");
+			lcd_set_cursor(1, 0);
+			lcd_write_string(humd1);
 		}
 
 	GetDeviceIDSht21();
@@ -162,6 +162,35 @@ void getinput(){
 	lcd_write_string(humd1);
 
 
+}
+
+void accuate(){
+	if(TTemp < temp){
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, 0);
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, 1);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, 0);
+	}
+	if(TTemp > temp){
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, 1);
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, 0);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, 0);
+	}
+	if(TTemp == temp)
+	{
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, 1);
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, 1);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, 1);
+
+	}
+
+
+
+	if(THumd < humd){
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, 1);
+	}
+	if(THumd > humd ){
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, 0);
+	}
 }
 /**
   * @brief  The application entry point.
@@ -206,6 +235,11 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, 1);
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, 1);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, 1);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, 1);
+
   lcd_init();
   lcd_backlight(1); // Turn on backlight
   uint16_t Data = 10;
@@ -221,6 +255,7 @@ int main(void)
   while (1){
     /* USER CODE END WHILE */
 	  getinput();
+	  accuate();
     /* USER CODE BEGIN 3 */
 
   }

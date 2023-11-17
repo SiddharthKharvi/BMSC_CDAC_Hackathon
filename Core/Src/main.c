@@ -103,22 +103,44 @@ void lcd_backlight(uint8_t state);
 /* USER CODE END 0 */
 uint16_t temp = 0;
 uint16_t humd= 0;
-uint16_t TTemp = 0;
-uint16_t THumd = 0;
+uint16_t TTemp = 27;
+uint16_t THumd = 50;
+
+uint16_t B1 = 0;
+uint16_t B2 = 0;
 
 
 
 void getinput(){
+	char *t1 = "Temperature: ";
+	char *t2 = "Humidity: ";
+	char temp1[10];
+	char humd1[10];
+
 	if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET){
 		HAL_ADC_Start(&hadc1);
 		HAL_ADC_PollForConversion(&hadc1,1000);
-		TTemp = (HAL_ADC_GetValue(&hadc1) / 160) + 20;
+		TTemp = (HAL_ADC_GetValue(&hadc1) / 160) + 16;
+		sprintf(temp1, "%d", TTemp);
+
+//		lcd_clear();
+//		lcd_set_cursor(0, 0);
+//		lcd_write_string("SET Temperature:");
+//		lcd_write_string(temp1);
+
+
 	}
 
 	if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7) == GPIO_PIN_SET){
 			HAL_ADC_Start(&hadc1);
 			HAL_ADC_PollForConversion(&hadc1,1000);
 			THumd = HAL_ADC_GetValue(&hadc1) / 40;
+			sprintf(humd1, "%d", THumd);
+
+//			lcd_clear();
+//			lcd_set_cursor(0, 0);
+//			lcd_write_string("SET Humidity:");
+//			lcd_write_string(humd1);
 		}
 
 	GetDeviceIDSht21();
@@ -127,6 +149,17 @@ void getinput(){
 	GetHumidyShtc3();
 	temp = Read_Temprature() / 1000;
 	humd = Read_Humidity() / 1000;
+
+	sprintf(temp1, "%d", temp);
+	sprintf(humd1, "%d", humd);
+
+	lcd_clear();
+	lcd_set_cursor(0, 0);
+	lcd_write_string("Temperature ");
+	lcd_write_string(temp1);
+	lcd_set_cursor(1, 0);
+	lcd_write_string("Humidity ");
+	lcd_write_string(humd1);
 
 
 }

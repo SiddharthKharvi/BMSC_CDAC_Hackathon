@@ -1,0 +1,13 @@
+../Core/Src/LIS3DH.c:45:9:Read_WHO_AM_I_Reg	1
+../Core/Src/LIS3DH.c:58:6:WriteIO	1
+../Core/Src/LIS3DH.c:73:6:ReadIO	2
+../Core/Src/LIS3DH.c:94:6:Init	7
+../Core/Src/LIS3DH.c:157:9:GetDataRaw	1
+../Core/Src/LIS3DH.c:181:12:GetDataScaled	1
+../Core/Src/LIS3DH.c:198:6:PollDRDY	5
+../Core/Src/LIS3DH.c:223:6:X_calibrate	1
+../Core/Src/LIS3DH.c:234:6:Y_calibrate	1
+../Core/Src/LIS3DH.c:245:6:Z_calibrate	1
+../Core/Src/LIS3DH.c:256:9:Rolling	1
+../Core/Src/LIS3DH.c:273:9:Pitching	1
+../Core/Src/LIS3DH.c:290:9:steps_fw_bw	13

@@ -1,0 +1,7 @@
+../Core/Src/UART.c:21:6:UART_TRANSMIT	1
+../Core/Src/UART.c:33:6:UART_Receive	1
+../Core/Src/UART.c:43:6:UART_Receive_Interrupt_CallBack	1
+../Core/Src/UART.c:52:6:HAL_UART_RxCpltCallback	1
+../Core/Src/UART.c:68:6:Printf_Function	1
+../Core/Src/UART.c:85:1:__io_putchar	1
+../Core/Src/UART.c:98:6:UART_Different_Datatypes	1
